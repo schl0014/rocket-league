@@ -34,28 +34,31 @@ export default class Player extends GameItem {
             this.setYPosition(this.getYPosition() + this.getSpeed());
         }
     }
-    collidesWithRockets(rockets) {
-        rockets.forEach((rocket) => {
+    collidesWithScoringItem(scoringItems) {
+        scoringItems.forEach((scoringItem, index) => {
             let testX;
             let testY;
-            if (this.getXPosition() < rocket.getXPosition()) {
-                testX = rocket.getXPosition();
+            if (this.getXPosition() < scoringItem.getXPosition()) {
+                testX = scoringItem.getXPosition();
             }
-            else if (this.getXPosition() > rocket.getXPosition() + rocket.getImage().width) {
-                testX = rocket.getXPosition() + rocket.getImage().width;
+            else if (this.getXPosition() > scoringItem.getXPosition() + scoringItem.getImage().width) {
+                testX = scoringItem.getXPosition() + scoringItem.getImage().width;
             }
-            if (this.getYPosition() < rocket.getYPosition()) {
-                testY = rocket.getYPosition();
+            if (this.getYPosition() < scoringItem.getYPosition()) {
+                testY = scoringItem.getYPosition();
             }
-            else if (this.getYPosition() > rocket.getYPosition() + rocket.getImage().height) {
-                testY = rocket.getYPosition() + rocket.getImage().height;
+            else if (this.getYPosition() > scoringItem.getYPosition() + scoringItem.getImage().height) {
+                testY = scoringItem.getYPosition() + scoringItem.getImage().height;
             }
             const distX = this.getXPosition() - testX;
             const distY = this.getYPosition() - testY;
             const distance = Math.sqrt(distX * distX + distY * distY);
             if (distance <= this.radius) {
                 console.log('Collides with Player');
-                this.radius += 3;
+                this.radius += scoringItem.getPoints();
+                if (scoringItem.getPoints() < 0 && this.radius > scoringItem.getPoints() + 3) {
+                    scoringItems.splice(index, 1);
+                }
             }
         });
     }

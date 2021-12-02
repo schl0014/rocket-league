@@ -24,8 +24,5 @@ export default class GameItem {
     setSpeed(speed) {
         this.speed = speed;
     }
-    static randomInteger(min, max) {
-        return Math.round(Math.random() * (max - min) + min);
-    }
 }
 //# sourceMappingURL=GameItem.js.map

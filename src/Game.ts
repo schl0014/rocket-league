@@ -1,8 +1,10 @@
 import Player from './Player.js';
 import Rocket from './Rocket.js';
+import ScoringItem from './ScoringItem.js';
+import PowerUp from './PowerUp.js';
 
 export default class Game {
-  private rockets: Rocket[];
+  private scoringItems: ScoringItem[];
 
   private player: Player;
 
@@ -25,24 +27,24 @@ export default class Game {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.ctx = <CanvasRenderingContext2D> this.canvas.getContext('2d');
-    this.rockets = [];
+    this.scoringItems = [];
 
     // add some rockets
     for (let index = 0; index < 10; index++) {
       if (index % 2 === 0) {
         console.log('leftToRight');
-        this.rockets.push(
+        this.scoringItems.push(
           new Rocket('leftToRight', this.canvas.width, this.canvas.height),
         );
       } else {
         console.log('topToBottom');
-        this.rockets.push(
+        this.scoringItems.push(
           new Rocket('topToBottom', this.canvas.width, this.canvas.height),
         );
       }
     }
 
-    console.log(this.rockets);
+    console.log(this.scoringItems);
 
     this.player = new Player(this.canvas.width, this.canvas.height);
     console.log(this.player);
@@ -60,7 +62,12 @@ export default class Game {
     this.frameCounter += 1;
     this.move();
     this.scoringItemOutOfCanvas();
-    this.player.collidesWithRockets(this.rockets);
+    this.player.collidesWithScoringItem(this.scoringItems);
+
+    // Every 500 frames add a power up
+    if (this.frameCounter % 500 === 0) {
+      this.scoringItems.push(new PowerUp(this.canvas.width, this.canvas.height));
+    }
 
     this.draw();
 
@@ -71,8 +78,8 @@ export default class Game {
    * Method to move the scoring items
    */
   public move(): void {
-    this.rockets.forEach((rocket) => {
-      rocket.move();
+    this.scoringItems.forEach((scoringItem) => {
+      scoringItem.move();
     });
     this.player.move();
   }
@@ -81,8 +88,8 @@ export default class Game {
    * Method to determine of a scoring items leaves the window
    */
   public scoringItemOutOfCanvas(): void {
-    this.rockets.forEach((rocket) => {
-      rocket.outOfCanvas(this.canvas.width, this.canvas.height);
+    this.scoringItems.forEach((scoringItem) => {
+      scoringItem.outOfCanvas(this.canvas.width, this.canvas.height);
     });
   }
 
@@ -93,16 +100,15 @@ export default class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.draw(this.ctx);
     // when there are elements in the scoring items array
-    if (this.rockets.length !== 0) {
+    if (this.scoringItems.length !== 0) {
       // draw each scoring item
-      this.rockets.forEach((rocket) => {
-        rocket.draw(this.ctx);
+      this.scoringItems.forEach((scoringItem) => {
+        scoringItem.draw(this.ctx);
       });
 
       // write the current score
       this.writeTextToCanvas(
         `Score is: ${this.score}`,
-        40,
         this.canvas.width / 2,
         40,
       );

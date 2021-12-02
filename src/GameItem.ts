@@ -69,18 +69,4 @@ export default abstract class GameItem {
   protected setSpeed(speed: number): void {
     this.speed = speed;
   }
-
-  /**
-   * Generates a random integer number between min and max
-   *
-   * NOTE: this is a 'static' method. This means that this method must be called like
-   * `Game.randomInteger()` instead of `this.randomInteger()`.
-   *
-   * @param min - minimal time
-   * @param max - maximal time
-   * @returns a random integer number between min and max
-   */
-  protected static randomInteger(min: number, max: number): number {
-    return Math.round(Math.random() * (max - min) + min);
-  }
 }

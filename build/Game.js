@@ -1,7 +1,8 @@
 import Player from './Player.js';
 import Rocket from './Rocket.js';
+import PowerUp from './PowerUp.js';
 export default class Game {
-    rockets;
+    scoringItems;
     player;
     canvas;
     score;
@@ -12,18 +13,18 @@ export default class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
-        this.rockets = [];
+        this.scoringItems = [];
         for (let index = 0; index < 10; index++) {
             if (index % 2 === 0) {
                 console.log('leftToRight');
-                this.rockets.push(new Rocket('leftToRight', this.canvas.width, this.canvas.height));
+                this.scoringItems.push(new Rocket('leftToRight', this.canvas.width, this.canvas.height));
             }
             else {
                 console.log('topToBottom');
-                this.rockets.push(new Rocket('topToBottom', this.canvas.width, this.canvas.height));
+                this.scoringItems.push(new Rocket('topToBottom', this.canvas.width, this.canvas.height));
             }
         }
-        console.log(this.rockets);
+        console.log(this.scoringItems);
         this.player = new Player(this.canvas.width, this.canvas.height);
         console.log(this.player);
         this.score = 0;
@@ -35,29 +36,32 @@ export default class Game {
         this.frameCounter += 1;
         this.move();
         this.scoringItemOutOfCanvas();
-        this.player.collidesWithRockets(this.rockets);
+        this.player.collidesWithScoringItem(this.scoringItems);
+        if (this.frameCounter % 500 === 0) {
+            this.scoringItems.push(new PowerUp(this.canvas.width, this.canvas.height));
+        }
         this.draw();
         requestAnimationFrame(this.loop);
     };
     move() {
-        this.rockets.forEach((rocket) => {
-            rocket.move();
+        this.scoringItems.forEach((scoringItem) => {
+            scoringItem.move();
         });
         this.player.move();
     }
     scoringItemOutOfCanvas() {
-        this.rockets.forEach((rocket) => {
-            rocket.outOfCanvas(this.canvas.width, this.canvas.height);
+        this.scoringItems.forEach((scoringItem) => {
+            scoringItem.outOfCanvas(this.canvas.width, this.canvas.height);
         });
     }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.draw(this.ctx);
-        if (this.rockets.length !== 0) {
-            this.rockets.forEach((rocket) => {
-                rocket.draw(this.ctx);
+        if (this.scoringItems.length !== 0) {
+            this.scoringItems.forEach((scoringItem) => {
+                scoringItem.draw(this.ctx);
             });
-            this.writeTextToCanvas(`Score is: ${this.score}`, 40, this.canvas.width / 2, 40);
+            this.writeTextToCanvas(`Score is: ${this.score}`, this.canvas.width / 2, 40);
         }
     }
     writeTextToCanvas(text, xCoordinate, yCoordinate, fontSize = 20, color = 'red', alignment = 'center') {

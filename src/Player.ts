@@ -1,6 +1,6 @@
 import KeyboardListener from './KeyboardListener.js';
-import Rocket from './Rocket.js';
 import GameItem from './GameItem.js';
+import ScoringItem from './ScoringItem.js';
 
 export default class Player extends GameItem {
   private radius: number;
@@ -64,28 +64,28 @@ export default class Player extends GameItem {
   }
 
   /**
-   * Method to find out if player collides with rocket
+   * Method to find out if player collides with a scoring item
    *
-   * @param rockets array of rockets
+   * @param scoringItems array of scoringItems
    */
-  public collidesWithRockets(rockets: Rocket[]): void {
-    rockets.forEach((rocket) => {
+  public collidesWithScoringItem(scoringItems: ScoringItem[]): void {
+    scoringItems.forEach((scoringItem, index) => {
       let testX: number;
       let testY: number;
-      if (this.getXPosition() < rocket.getXPosition()) {
-        testX = rocket.getXPosition();
+      if (this.getXPosition() < scoringItem.getXPosition()) {
+        testX = scoringItem.getXPosition();
       } else if (
-        this.getXPosition() > rocket.getXPosition() + rocket.getImage().width
+        this.getXPosition() > scoringItem.getXPosition() + scoringItem.getImage().width
       ) {
-        testX = rocket.getXPosition() + rocket.getImage().width;
+        testX = scoringItem.getXPosition() + scoringItem.getImage().width;
       }
 
-      if (this.getYPosition() < rocket.getYPosition()) {
-        testY = rocket.getYPosition();
+      if (this.getYPosition() < scoringItem.getYPosition()) {
+        testY = scoringItem.getYPosition();
       } else if (
-        this.getYPosition() > rocket.getYPosition() + rocket.getImage().height
+        this.getYPosition() > scoringItem.getYPosition() + scoringItem.getImage().height
       ) {
-        testY = rocket.getYPosition() + rocket.getImage().height;
+        testY = scoringItem.getYPosition() + scoringItem.getImage().height;
       }
 
       const distX = this.getXPosition() - testX;
@@ -94,7 +94,12 @@ export default class Player extends GameItem {
 
       if (distance <= this.radius) {
         console.log('Collides with Player');
-        this.radius += 3;
+        this.radius += scoringItem.getPoints();
+        if (
+          scoringItem.getPoints() < 0 && this.radius > scoringItem.getPoints() + 3
+        ) {
+          scoringItems.splice(index, 1);
+        }
       }
     });
   }

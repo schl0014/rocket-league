@@ -1,9 +1,9 @@
-import GameItem from './GameItem.js';
+import ScoringItem from './ScoringItem.js';
 
-export default class Rocket extends GameItem {
+export default class Rocket extends ScoringItem {
   private type: string;
 
-  private image: HTMLImageElement;
+  // private image: HTMLImageElement;
 
   /**
    * Initialize the Rocket
@@ -13,42 +13,24 @@ export default class Rocket extends GameItem {
    * @param canvasHeight heighst of the canvas
    */
   public constructor(type: string, canvasWidth: number, canvasHeight: number) {
-    super('Rocket');
+    super('Rocket', 3);
 
-    let xPosition = GameItem.randomInteger(0, canvasWidth - 200);
-    let yPosition = GameItem.randomInteger(0, canvasHeight - 200);
+    let xPosition = ScoringItem.randomInteger(0, canvasWidth - 200);
+    let yPosition = ScoringItem.randomInteger(0, canvasHeight - 200);
 
     if (type === 'leftToRight') {
       xPosition = 0;
-      this.image = Rocket.loadNewImage('./assets/rocket-horizontal.png');
+      this.setImage(Rocket.loadNewImage('./assets/rocket-horizontal.png'));
     } else {
       yPosition = 0;
-      this.image = Rocket.loadNewImage('./assets/rocket-vertical.png');
+      this.setImage(Rocket.loadNewImage('./assets/rocket-vertical.png'));
     }
 
     this.setXPosition(xPosition);
     this.setYPosition(yPosition);
 
     this.type = type;
-    this.setSpeed(GameItem.randomInteger(5, 15));
-  }
-
-  /**
-   * Get the image of the rocket
-   *
-   * @returns the image of the rocket
-   */
-  public getImage(): HTMLImageElement {
-    return this.image;
-  }
-
-  /**
-   * Method to draw the Rocket on the canvas
-   *
-   * @param ctx rendering context
-   */
-  public draw(ctx: CanvasRenderingContext2D): void {
-    ctx.drawImage(this.image, this.getXPosition(), this.getYPosition());
+    this.setSpeed(ScoringItem.randomInteger(5, 15));
   }
 
   /**
@@ -70,29 +52,13 @@ export default class Rocket extends GameItem {
    */
   public outOfCanvas(canvasWidth: number, canvasHeight: number): void {
     if (this.type === 'leftToRight') {
-      if (this.getXPosition() + this.image.width >= canvasWidth) {
+      if (this.getXPosition() + this.getImage().width >= canvasWidth) {
         this.setXPosition(0);
-        this.setYPosition(GameItem.randomInteger(0, canvasHeight));
+        this.setYPosition(ScoringItem.randomInteger(0, canvasHeight));
       }
-    } else if (this.getYPosition() + this.image.height >= canvasHeight) {
+    } else if (this.getYPosition() + this.getImage().height >= canvasHeight) {
       this.setYPosition(0);
-      this.setXPosition(GameItem.randomInteger(0, canvasWidth));
+      this.setXPosition(ScoringItem.randomInteger(0, canvasWidth));
     }
-  }
-
-  /**
-   * Loads an image in such a way that the screen doesn't constantly flicker
-   *
-   *
-   * NOTE: this is a 'static' method. This means that this method must be called like
-   * `Game.loadNewImage()` instead of `this.loadNewImage()`.
-   *
-   * @param source The address or URL of the a media resource that is to be loaded
-   * @returns an HTMLImageElement with the source as its src attribute
-   */
-  protected static loadNewImage(source: string): HTMLImageElement {
-    const img = new Image();
-    img.src = source;
-    return img;
   }
 }
