@@ -42,8 +42,8 @@ export default class KeyboardListener {
    * Returns `true` if and only if the last known state of the keyboard
    * reflects that the specified key is currently pressed.
    *
-   * @param {number} keyCode the keyCode to check
-   * @returns {boolean} `true` when the specified key is currently down
+   * @param keyCode the keyCode to check
+   * @returns `true` when the specified key is currently down
    */
   public isKeyDown(keyCode: number): boolean {
     return this.keyCodeStates[keyCode] === true;
