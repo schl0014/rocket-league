@@ -15,7 +15,8 @@ class Game {
 
   /**
    * Construct the Game
-   * @param {HTMLCanvasElement} canvasId - id of the canvas
+   *
+   * @param canvasId - id of the canvas
    */
   public constructor(canvasId: HTMLElement) {
     // Construct all of the canvas
@@ -74,30 +75,31 @@ class Game {
 
   /**
    * Method to create a Rocket object
-   * @param {string} name - name of the rocket
-   * @param {string} type - type of the rocket
+   *
+   * @param name - name of the rocket
+   * @param type - type of the rocket
    * @returns Rocket - returns a rocket object
    *
    * The rocket object has the following attributes:
    * - name of the rocket object
    * - xPos: x position on the canvas
    * - yPos: y position on the canvas
-   * - type: type of the rocket. The type will be used to determine left-to-right or 
+   * - type: type of the rocket. The type will be used to determine left-to-right or
    *         top-to-bottom movement
    * - speed: speed of the rocket
    * - image: an HTMLimageElement
    */
   public rocketFactory(name: string, type: string): any {
-    let xPosition = this.randomNumber(0, this.canvas.width - 200);
-    let yPosition = this.randomNumber(0, this.canvas.height - 200);
+    let xPosition = Game.randomInteger(0, this.canvas.width - 200);
+    let yPosition = Game.randomInteger(0, this.canvas.height - 200);
     let image: HTMLImageElement;
 
     if (type === 'leftToRight') {
       xPosition = 0;
-      image = this.loadNewImage('./assets/rocket-horizontal.png');
+      image = Game.loadNewImage('./assets/rocket-horizontal.png');
     } else {
       yPosition = 0;
-      image = this.loadNewImage('./assets/rocket-vertical.png');
+      image = Game.loadNewImage('./assets/rocket-vertical.png');
     }
 
     return {
@@ -105,15 +107,16 @@ class Game {
       xPos: xPosition,
       yPos: yPosition,
       type: type,
-      speed: this.randomNumber(0, 15),
+      speed: Game.randomInteger(0, 15),
       image: image,
     };
   }
 
   /**
    * Method to create a player object
-   * @param {string} name - name of the player
-   * @returns {any} player - player object
+   *
+   * @param name - name of the player
+   * @returns player - player object
    */
   public createPlayer(name: string): any {
     return {
@@ -176,21 +179,26 @@ class Game {
       if (rocket.type === 'leftToRight') {
         if (rocket.xPos + rocket.image.width >= this.canvas.width) {
           rocket.xPos = 0;
-          rocket.yPos = this.randomNumber(0, this.canvas.height);
+          rocket.yPos = Game.randomInteger(0, this.canvas.height);
         }
       } else if (rocket.yPos + rocket.image.height >= this.canvas.height) {
-          rocket.yPos = 0;
-          rocket.xPos = this.randomNumber(0, this.canvas.height);
+        rocket.yPos = 0;
+        rocket.xPos = Game.randomInteger(0, this.canvas.height);
       }
     });
   }
 
   /**
-   * Loads an image so it doesn't flicker
-   * @param {HTMLImageElement} source
-   * @returns HTMLImageElement - returns an image
+   * Loads an image in such a way that the screen doesn't constantly flicker
+   *
+   *
+   * NOTE: this is a 'static' method. This means that this method must be called like
+   * `Game.loadNewImage()` instead of `this.loadNewImage()`.
+   *
+   * @param source The address or URL of the a media resource that is to be loaded
+   * @returns an HTMLImageElement with the source as its src attribute
    */
-  public loadNewImage(source: string): HTMLImageElement {
+  private static loadNewImage(source: string): HTMLImageElement {
     const img = new Image();
     img.src = source;
     return img;
@@ -213,7 +221,6 @@ class Game {
 
       //  write the current score
       this.writeTextToCanvas(
-        this.ctx,
         `Score is: ${this.score}`,
         40,
         this.canvas.width / 2,
@@ -245,36 +252,40 @@ class Game {
 
   /**
    * Writes text to the canvas
-   * @param {CanvasRenderingContext2D} ctx - canvas rendering context
-   * @param {string} text - Text to write
-   * @param {number} fontSize - Font size in pixels
-   * @param {number} xCoordinate - Horizontal coordinate in pixels
-   * @param {number} yCoordinate - Vertical coordinate in pixels
-   * @param {string} alignment - Where to align the text
-   * @param {string} color - The color of the text
+   *
+   * @param text - Text to write
+   * @param xCoordinate - Horizontal coordinate in pixels
+   * @param yCoordinate - Vertical coordinate in pixels
+   * @param fontSize - Font size in pixels
+   * @param color - The color of the text
+   * @param alignment - Where to align the text
    */
   public writeTextToCanvas(
-    ctx: CanvasRenderingContext2D,
     text: string,
-    fontSize: number = 20,
     xCoordinate: number,
     yCoordinate: number,
-    alignment: CanvasTextAlign = 'center',
+    fontSize: number = 20,
     color: string = 'red',
-  ) {
-    ctx.font = `${fontSize}px Minecraft`;
+    alignment: CanvasTextAlign = 'center',
+  ): void {
+    const ctx = this.canvas.getContext('2d');
+    ctx.font = `${fontSize}px sans-serif`;
     ctx.fillStyle = color;
     ctx.textAlign = alignment;
     ctx.fillText(text, xCoordinate, yCoordinate);
   }
 
   /**
-   * Renders a random number between min and max
-   * @param {number} min - minimum number
-   * @param {number} max - maximum number
-   * @returns {number} random number
+   * Generates a random integer number between min and max
+   *
+   * NOTE: this is a 'static' method. This means that this method must be called like
+   * `Game.randomInteger()` instead of `this.randomInteger()`.
+   *
+   * @param min - minimal time
+   * @param max - maximal time
+   * @returns a random integer number between min and max
    */
-  public randomNumber(min: number, max: number): number {
+  public static randomInteger(min: number, max: number): number {
     return Math.round(Math.random() * (max - min) + min);
   }
 }
