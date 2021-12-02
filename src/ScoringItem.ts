@@ -1,6 +1,6 @@
 import GameItem from './GameItem.js';
 
-export default class ScoringItem extends GameItem {
+export default abstract class ScoringItem extends GameItem {
   private points: number;
 
   private image: HTMLImageElement;
@@ -53,21 +53,17 @@ export default class ScoringItem extends GameItem {
   }
 
   /**
-   * Empty move method
+   * Abstract method to move item
    */
-  // public move(): void {
-  //   // Empty to make override possible
-  // }
+  public abstract move(): void;
 
   /**
-   * Method to determine if item is out of canvas
+   * Abstract method to determine if item is out of canvas
    *
    * @param canvasWidth width of the canvas
    * @param canvasHeight height of the canvas
    */
-  // public outOfCanvas(canvasWidth: number, canvasHeight: number): void {
-  //   // Empty to make override possible
-  // }
+  public abstract outOfCanvas(canvasWidth: number, canvasHeight: number): void;
 
   /**
    * Loads an image in such a way that the screen doesn't constantly flicker

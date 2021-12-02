@@ -57,7 +57,7 @@ export default class Game {
   /**
    * Method for the Game Loop
    */
-  public loop = (): void => {
+  private loop = (): void => {
     this.score += 1;
     this.frameCounter += 1;
     this.move();
@@ -77,9 +77,13 @@ export default class Game {
   /**
    * Method to move the scoring items
    */
-  public move(): void {
+  private move(): void {
     this.scoringItems.forEach((scoringItem) => {
-      scoringItem.move();
+      if (scoringItem instanceof PowerUp && this.frameCounter % 300 === 0) {
+        scoringItem.move();
+      } else {
+        scoringItem.move();
+      }
     });
     this.player.move();
   }
@@ -87,7 +91,7 @@ export default class Game {
   /**
    * Method to determine of a scoring items leaves the window
    */
-  public scoringItemOutOfCanvas(): void {
+  private scoringItemOutOfCanvas(): void {
     this.scoringItems.forEach((scoringItem) => {
       scoringItem.outOfCanvas(this.canvas.width, this.canvas.height);
     });
@@ -96,7 +100,7 @@ export default class Game {
   /**
    * Draws all the necessary elements to the canvas
    */
-  public draw(): void {
+  private draw(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.draw(this.ctx);
     // when there are elements in the scoring items array
@@ -125,7 +129,7 @@ export default class Game {
    * @param color - The color of the text
    * @param alignment - Where to align the text
    */
-  public writeTextToCanvas(
+  private writeTextToCanvas(
     text: string,
     xCoordinate: number,
     yCoordinate: number,

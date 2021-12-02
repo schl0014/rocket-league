@@ -45,7 +45,12 @@ export default class Game {
     };
     move() {
         this.scoringItems.forEach((scoringItem) => {
-            scoringItem.move();
+            if (scoringItem instanceof PowerUp && this.frameCounter % 300 === 0) {
+                scoringItem.move();
+            }
+            else {
+                scoringItem.move();
+            }
         });
         this.player.move();
     }

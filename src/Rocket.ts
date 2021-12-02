@@ -3,8 +3,6 @@ import ScoringItem from './ScoringItem.js';
 export default class Rocket extends ScoringItem {
   private type: string;
 
-  // private image: HTMLImageElement;
-
   /**
    * Initialize the Rocket
    *

@@ -1,48 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.3.0">
-  <zoom_level>9</zoom_level>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>378</x>
-      <y>99</y>
-      <w>243</w>
-      <h>153</h>
-    </coordinates>
-    <panel_attributes>Game
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>629</x><y>70</y><w>270</w><h>200</h></coordinates><panel_attributes>Game
 --
 - canvas: HTMLCanvasElement
 - scoringItems: ScoringItem[]
 - player: Player
 - score: number
 - ctx: CanvasRenderingContext2D
+- frameCounter: number
 --
 - draw()
 - move()
+- loop()
+- scoringItemsOutOfCanvas()
 - writeTextToCanvas(...)
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>468</x>
-      <y>243</y>
-      <w>27</w>
-      <h>81</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>351</x>
-      <y>306</y>
-      <w>297</w>
-      <h>117</h>
-    </coordinates>
-    <panel_attributes>GameItem
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>729</x><y>260</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>599</x><y>330</y><w>330</w><h>130</h></coordinates><panel_attributes>GameItem
 --
 - name: string
 - xPosition: number
@@ -51,35 +21,13 @@
 --
 
 
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>261</x>
-      <y>720</y>
-      <w>279</w>
-      <h>117</h>
-    </coordinates>
-    <panel_attributes>Rocket
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>499</x><y>790</y><w>310</w><h>130</h></coordinates><panel_attributes>Rocket
 --
 - type: string
 --
 + move()
 + outOfCanvas(width: number, height: number)
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>513</x>
-      <y>486</y>
-      <w>315</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>Player
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>779</x><y>530</y><w>350</w><h>160</h></coordinates><panel_attributes>Player
 --
 - radius: number
 - keyBoardListener: KeyboardListener
@@ -87,107 +35,18 @@
 + draw(ctx: CanvasRenderingContext2D)
 + move()
 + collidesWithScoringItem(scoringItem: ScoringItem[])
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>540</x>
-      <y>414</y>
-      <w>99</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>351</x>
-      <y>621</y>
-      <w>63</w>
-      <h>117</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;50.0;110.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>720</y>
-      <w>243</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>PowerUp
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>809</x><y>450</y><w>110</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;90;80</additional_attributes></element><element><id>Relation</id><coordinates><x>569</x><y>670</y><w>100</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;80;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>209</x><y>790</y><w>270</w><h>70</h></coordinates><panel_attributes>PowerUp
 --
- </panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>126</x>
-      <y>621</y>
-      <w>153</w>
-      <h>117</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>150.0;10.0;10.0;110.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>189</x>
-      <y>486</y>
-      <w>279</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>ScoringItem
+--
++ move()
++ outOfCanvas(width:number, height:number)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>349</x><y>670</y><w>140</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;10;10;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>389</x><y>520</y><w>310</w><h>160</h></coordinates><panel_attributes>&lt;Abstract&gt; ScoringItem
 --
 - points: number
 - image: HTMLImageElement
 --
-+ outOfCanvas(width: number, height: number)
-+ draw(ctx: CanvasRenderingContext2D)
-+ move()</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>333</x>
-      <y>414</y>
-      <w>108</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>100.0;10.0;10.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>0</x>
-      <y>630</y>
-      <w>99</w>
-      <h>45</h>
-    </coordinates>
-    <panel_attributes>Only contains 
-constructor
-bg=blue
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>27</x>
-      <y>666</y>
-      <w>27</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
-  </element>
-</diagram>
++ &lt;abstract&gt; outOfCanvas(width: number, height: number)
++ &lt;abstract&gt; draw(ctx: CanvasRenderingContext2D)
++ move()
++ draw()
+# &lt;static&gt; loadNewImage(source: String)
+# &lt;static&gt; randomInteger(min:number, max:number)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>549</x><y>450</y><w>150</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;10;70</additional_attributes></element></diagram>

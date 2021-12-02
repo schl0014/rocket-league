@@ -18,10 +18,6 @@ export default class ScoringItem extends GameItem {
     draw(ctx) {
         ctx.drawImage(this.image, this.getXPosition(), this.getYPosition());
     }
-    move() {
-    }
-    outOfCanvas(canvasWidth, canvasHeight) {
-    }
     static loadNewImage(source) {
         const img = new Image();
         img.src = source;

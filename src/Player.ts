@@ -94,6 +94,7 @@ export default class Player extends GameItem {
 
       if (distance <= this.radius) {
         console.log('Collides with Player');
+        // TODO: make sure the player does not shrink to unvisible portions :-)
         this.radius += scoringItem.getPoints();
         if (
           scoringItem.getPoints() < 0 && this.radius > scoringItem.getPoints() + 3
