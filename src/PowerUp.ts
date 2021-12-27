@@ -20,7 +20,7 @@ export default class PowerUp extends ScoringItem {
   }
 
   /**
-   *
+   * the move of the powerup
    */
   public move():void {
     this.xPosition += ScoringItem.randomInteger(0, this.speed);

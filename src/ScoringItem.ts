@@ -47,13 +47,6 @@ export default abstract class ScoringItem extends GameItem {
     return this.image;
   }
 
-  // /**
-  //  *
-  //  */
-  // public move() {
-
-  // }
-
   /**
    * draw the rocket
    *
